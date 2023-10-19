@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // ToDo list
-        Schema::create('activities', function (Blueprint $table) {
-            $table->id();            
-            $table->integer('activity_name');
-            $table->timestamps();            
+        Schema::create('items', function (Blueprint $table) {
+            $table->id();
+            $table->string('item_name');
+            $table->integer('activity_id');
+            $table->boolean('status');
+            $table->timestamps();
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('activities');
+        Schema::dropIfExists('items');
     }
 };
