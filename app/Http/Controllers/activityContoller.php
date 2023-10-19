@@ -21,6 +21,7 @@ class activityContoller extends Controller
 
     public function store(Request $request)
     {
+        /* #region STORE */
         $activity_name = $request->input('activity_name');
         $data = array(
             'activity_name' => $activity_name,
@@ -43,10 +44,12 @@ class activityContoller extends Controller
                 'message' => 'Fail'
             ], 400);
         }
+        /* #endregion */
     }
 
     public function store_lists(Request $request, $activity_id)
     {
+        /* #region STORE LISTS */
         $item_name = $request->input('item_name');
 
         $item = Item::create([
@@ -70,11 +73,13 @@ class activityContoller extends Controller
                 'message' => 'Fail',
             ], 400);
         }
+        /* #endregion */
     }
 
     public function show()
     {
-        $activities = Activity::with('items')->get();
+        // $activities = Activity::with('items')->get();
+        $activities = Activity::get()->all();
 
         return response()->json([
             'data' => $activities
@@ -83,6 +88,7 @@ class activityContoller extends Controller
 
     public function activity_update(Request $request, $activity_id)
     {
+        /* #region ACTIVITY UPDATE */
         $activity = Activity::find($activity_id);
 
         if ($activity) {
@@ -103,10 +109,12 @@ class activityContoller extends Controller
                 'message' => 'Not Found'
             ], 400);
         }
+        /* #endregion */
     }
 
     public function item_update(Request $request, $activity_id, $item_id)
     {
+        /* #region ITEM UPDATE */
         $item = Item::where('activity_id', $activity_id)->where('id', $item_id)->first();
 
         if ($item) {
@@ -127,24 +135,30 @@ class activityContoller extends Controller
 
             ], 404);
         }
+        /* #endregion */
     }
 
-    public function getActivityById($activity_id)
+    public function activity_by_id($activity_id)
     {
-        $activity = Activity::with('items')->find($activity_id);
+        // $activity = Activity::with('items')->find($activity_id);
+        $activity = Activity::find($activity_id);
+        $item_activity = Item::where('activity_id', $activity->id)->get();
 
         if ($activity) {
             return response()->json([
                 'data' => [
                     'type' => 'activities',
                     'message' => 'Success',
-                    'attributes' => $activity
+                    'attributes' => $item_activity
+                    // 'attributes' => $activity
                 ]
             ], 200);
         } else {
             return response()->json([
-                'type' => 'activities',
-                'message' => 'Not Found',
+                'data' => [
+                    'type' => 'activities',
+                    'message' => 'Not Found',
+                ]
             ], 400);
         }
     }

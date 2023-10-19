@@ -14,4 +14,6 @@ class Item extends Model
         'activity_id',
         'status',
     ];
+
+    protected $hidden = [];
 }

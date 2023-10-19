@@ -14,7 +14,7 @@ return new class extends Migration
         // ToDo list
         Schema::create('activities', function (Blueprint $table) {
             $table->id();            
-            $table->integer('activity_name');
+            $table->string('activity_name');
             $table->timestamps();            
         });
     }

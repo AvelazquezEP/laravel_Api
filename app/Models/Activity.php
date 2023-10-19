@@ -12,4 +12,11 @@ class Activity extends Model
     protected $fillable = [
         'activity_name',
     ];
+
+    protected $hidden = [];
+
+    public function items()
+    {
+        // return $this->hasMany('app\Models\Item');
+    }
 }
