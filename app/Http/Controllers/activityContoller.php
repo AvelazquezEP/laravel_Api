@@ -178,9 +178,9 @@ class activityContoller extends Controller
         }
     }
 
-    public function activityItemDestroy($activity_id, $item_id)
+    public function item_delete($activity_id, $item_id)
     {
-        $item = Item::where('activity_id', $item_id)->where('id', $item_id)->first();
+        $item = Item::where('activity_id', $activity_id)->where('id', $item_id)->first();
 
         if ($item) {
             $item->delete();
